@@ -1,5 +1,8 @@
 const WebSocket = require('ws');
 
+// Gunakan port dari environment variable, default ke 8081 jika lokal
+const PORT = process.env.PORT || 8081;
+
 // Buat server WebSocket
 const wss = new WebSocket.Server({ port: 8081 });
 
@@ -24,4 +27,5 @@ wss.on('connection', (ws) => {
         console.log('Client disconnected');
     });
 });
-console.log('WebSocket server running on ws://192.168.242.109:8081');
+
+console.log(`WebSocket server running on port ${PORT}`);
