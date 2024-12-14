@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "are-we-there-yet": "^2.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "ws": "^8.18.0",
@@ -9,7 +10,6 @@
   "version": "1.0.0",
   "description": "Project Robot",
   "main": "server.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
