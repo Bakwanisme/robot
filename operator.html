@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row; /* Ubah arah ke horizontal */
+            justify-content: center; /* Pusatkan tombol secara horizontal */
+            gap: 10px; /* Jarak antar tombol */
+            flex-wrap: wrap; /* Agar tombol otomatis turun ke baris baru jika tidak muat */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Operator Panel</h1>
+    <div class="button-container">
+        <button onclick="sendPageCommand('index.html')">Beranda</button>
+        <button onclick="sendVideoCommand('assets/index.mp4')">Stanby</button>
+        <button onclick="sendPageCommand('checkin.html')">Check-in</button>
+        <button onclick="sendVideoCommand('assets/tatib.mp4')">Tatib</button>
+        <button onclick="sendVideoCommand('assets/welcome.mp4')">Welcome</button>
+        <button onclick="sendVideoCommand('assets/perkenalan.mp4')">Perkenalan</button>
+        <button onclick="sendVideoCommand('assets/warning.mp4')">Warning</button>
+        <button onclick="sendVideoCommand('assets/himbauan-chck.mp4')">Himbauan Check-in</button>
+        <button onclick="sendVideoCommand('assets/panduan-chck.mp4')">Panduan Check-in</button>
+        <button onclick="sendVideoCommand('assets/tolong-chck.mp4')">Peringatan Check-in</button>
+        <button onclick="sendVideoCommand('assets/chck-done.mp4')">Terimakasih Check-in</button>
+        <button onclick="sendVideoCommand('assets/senior.mp4')">Sapa Senior</button>
+        <button onclick="sendVideoCommand('assets/minta-100.mp4')">100 Senior</button>
+        <button onclick="sendVideoCommand('assets/no-program.mp4')">Blank</button>
+        <button onclick="sendVideoCommand('assets/emot-1.mp4')">Emote 1</button>
+        <button onclick="sendVideoCommand('assets/emot-2.mp4')">Emote 2</button>
+        <button onclick="sendVideoCommand('assets/emot-3.mp4')">Emote 3</button>
+        <button onclick="sendVideoCommand('assets/terimakasih2.mp4')">Terimakasih</button>
+        <button onclick="sendVideoCommand('assets/baik.mp4')">Baik 1</button>
+        <button onclick="sendVideoCommand('assets/baik2.mp4')">Baik 2</button>
+        <button onclick="sendVideoCommand('assets/benar-sekali.mp4')">Benar sekali</button>
+        <button onclick="sendVideoCommand('assets/info-sutradara.mp4')">Sutradara</button>
+        <button onclick="sendVideoCommand('assets/info-toilet.mp4')">Toilet</button>
+    </div>
+    <div id="websocket-status">Koneksi WebSocket: Tidak Terhubung</div>
+
+    <script>
+        const socket = new WebSocket('ws://192.168.242.109:8081');
+
+        socket.onopen = () => {
+            console.log('Connected to WebSocket server');
+        };
+
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        // Kirim perintah untuk mengganti halaman
+        function sendPageCommand(pagePath) {
+            const message = { type: 'changePage', pagePath };
+            socket.send(JSON.stringify(message));
+        }
+
+        // Kirim perintah untuk mengganti video
+        function sendVideoCommand(videoPath) {
+            const message = { type: 'changeSlide', videoPath };
+            socket.send(JSON.stringify(message));
+        }
+        socket.onopen = () => {
+    document.getElementById('websocket-status').textContent = 'Koneksi WebSocket: Terhubung';
+    console.log('Connected to WebSocket server');
+};
+
+socket.onerror = (error) => {
+    document.getElementById('websocket-status').textContent = 'Koneksi WebSocket: Error';
+    console.error('WebSocket error:', error);
+};
+
+socket.onclose = () => {
+    document.getElementById('websocket-status').textContent = 'Koneksi WebSocket: Terputus';
+    console.log('WebSocket connection closed');
+};
+    </script>
+</body>
+</html>
